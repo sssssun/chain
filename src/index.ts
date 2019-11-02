@@ -16,6 +16,12 @@ class Block{
         index: number, previousHash:string, timestamp:number, data:string
     ):string => CryptoJs.SHA256(index+previousHash+timestamp+data).toString();
 
+    static validateStructure=(aBlock :Block):boolean => 
+        typeof aBlock.index==="number" && 
+        typeof aBlock.hash=== "string" && 
+        typeof aBlock.previousHash === "string" && 
+        typeof aBlock.data==="string" && 
+        typeof aBlock.timestamp === "number";
     
 
     constructor(index:number,hash: string,previousHash:string,data:string,timestamp:number){
@@ -51,7 +57,34 @@ const createNewBlock=(data:string): Block => {
     return newBlock;
 }
 
-console.log(createNewBlock("hello"));
+const getHashforBlock=(aBlock : Block):string => 
+    Block.calculateBlockHash(aBlock.index,aBlock.previousHash,aBlock.timestamp,aBlock.data);
 
+//candidate block, previous block 불러와서 비교
+//블록체인의 기반은 자신의 전 블록으로의 링크가 있다는 것
+//블록의 구조가 유효한지 판단
+const isBlockValid=(candidateBlock:Block, previousBlock:Block):boolean => {
+    if(!Block.validateStructure(candidateBlock)){
+        return false;
+    }
+    else if(previousBlock.index+1 !== candidateBlock.index){
+        return false;
+    }
+    else if(previousBlock.hash !== candidateBlock.previousHash){
+        return false;
+    }
+    else if(getHashforBlock(candidateBlock) !== candidateBlock.hash){
+        return false;
+    }
+    else{
+        return true;
+    }
+} 
+
+const addBlock=(candidateBlock : Block):void => {
+    if(isBlockValid(candidateBlock, getLatestBlock())){
+        blockchain.push(candidateBlock);
+    }
+}
 
 export {};
