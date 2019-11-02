@@ -1,0 +1,14 @@
+{
+  "name": "chain",
+  "version": "1.0.0",
+  "description": "Make blockchain with typescript",
+  "main": "index.js",
+  "repository": "https://github.com/sssssun/chain.git",
+  "author": "박선영 <sunsmile01023@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    
+    "start": "node index.js",
+    "prestart": "tsc"
+  }
+}
