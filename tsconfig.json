@@ -3,14 +3,14 @@
         "module": "commonjs",
         "target": "ES2015",
         "sourceMap": true,
-        "noImplicitAny": false
+        "noImplicitAny": false,
+        "outDir": "dist"
     },
     "include": [
-        "index.ts"
+        "src/**/*"
     ],
     "exclude": [
         "node_modules"
     ]
-
     
 }
